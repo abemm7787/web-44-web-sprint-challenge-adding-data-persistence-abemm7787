@@ -56,9 +56,9 @@ Build the migration(s) in Knex inside the `data/migrations` folder using appropr
 
 - [ ] A **task** is one of the steps needed to complete a project and is stored in a `tasks` table with the following columns:
 
-  - [ ] `task_id` - primary key
-  - [ ] `task_description` - required
-  - [ ] `task_notes` - optional
+  - [1 ] `task_id` - primary key
+  - [ 2] `task_description` - required
+  - [3 ] `task_notes` - optional
   - [ ] `task_completed` - the database defaults it to `false` (integer 0) if not provided
   - [ ] `project_id` - required and points to an actual `project_id` in the `projects` table
 
