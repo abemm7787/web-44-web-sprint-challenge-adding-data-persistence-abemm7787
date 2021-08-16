@@ -1,21 +1,20 @@
+const router = require("express").Router();
+const equity = require("./model");
 
-// build your `/api/resources` router here
-const router = require("express").Router()
+router.get("/resources", (req, res, next) => {
+    equity.get()
+    .then((resource) => {
+      res.status(200).json(resource);
+    })
+    .catch(next);
+});
 
+router.post("/resources", (req, res, next) => {
+    equity.create(req.body)
+    .then((newResource) => {
+      res.status(201).json(newResource);
+    })
+    .catch(next);
+});
 
-router.get("/", (req,res, next) => {
-    console.log("We are now live")
-})
-
-
-
-router.post("/:id", (req,res, next) => {
-
-    console.log("We are now live")
-})
-
-
-
-
-
-module.exports =  router
+module.exports = router;

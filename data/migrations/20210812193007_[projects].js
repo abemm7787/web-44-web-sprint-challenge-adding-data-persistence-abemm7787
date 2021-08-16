@@ -1,26 +1,41 @@
+const { transaction, table } = require("../dbConfig");
+
 exports.up = function (knex) {
   return knex.schema
-    .createTable("project", (tbl) => {
-      tbl.increments("project_id"); // primary key
-      tbl.text("project_name", 128).unique().notNullable();
-      tbl.text("project_description");
-    //   tbl.boolean("project_completed").defaultTo(false).integer("0");
+    .createTable("projects", (table) => {
+      table.increments("project_id"); //prima
+      table.string("project_name").notNullable();
+      table.string("project_description");
+      table.boolean("project_completed").defaultTo(false);
     })
-    .createTable("task", (tbl) => {
-      tbl.increments("task_id"); //primary key
-      tbl.text("task_description").notNullable();
-      tbl.text("task_notes").notNullable();
-    //   tbl.boolean("task_completed").defaultTo(false).integer("0");
-      tbl.text("project_id").notNullable().unsigned().notNullable();
+    .createTable("resources", (table) => {
+      table.increments("resource_id");
+      table.string("resource_name").unique().notNullable();
+      table.string("resource_description");}
+    )
+
+
+    .createTable("tasks", (table) => {
+      table.increments("task_id");
+      table.string("task_description").notNullable();
+      table.string("task_notes");
+      table.boolean("task_completed").defaultTo(0);
+      table.integer("project_id") .unsigned().notNullable().references("project_id").inTable("projects").onDelete("RESTRICT");
     })
-    .createTable("resource", (tbl) => {
-      tbl.increments("resource_id").notNullable();
-    });
-};
+  
+  }
+
+
+
+
+  
+
+
 
 exports.down = function (knex) {
   return knex.schema
-    .dropTableIfexists("projects")
-    .dropTableIfexists("task")
-    .dropTableIfexists("resource");
+    .dropTableIfExists("project_resources")
+    .dropTableIfExists("tasks")
+    .dropTableIfExists("resources")
+    .dropTableIfExists("projects");
 };

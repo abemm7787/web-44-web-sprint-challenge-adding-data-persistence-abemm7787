@@ -15,11 +15,18 @@ const projectRouter = require("./project/router")
 const resourceRouter = require("./resource/router")
 
 
-server.use("/api/tasks", taskRouter)
-server.use("/api/project/", projectRouter)
-server.use("/api/resource/", resourceRouter)
+server.use("/api/", taskRouter)
+server.use("/api/", projectRouter)
+server.use("/api/", resourceRouter)
 
-server.get("*")
+server.use((err, req, res, next /*eslint-disable-line*/) => {
+    res.status(res.status || 500).json({
+      message: err.message,
+      stack: err.stack,
+      note:"FALSE ALARM! "
+    });
+  });
+  
 
 
 module.exports = server
